@@ -1,0 +1,43 @@
+{% extends './base.html' %}
+
+{% block title %}
+  {% if creation %}
+    Create task | Task Manager
+  {% else %}
+    Edit task | Task Manager
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+
+  <div class="w3-container w3-card w3-margin-top">
+    <form method="post" action="">
+      {% csrf_token %}
+
+        {% for field in form %}
+          <div class="w3-margin">
+
+            {% for error in field.errors %}
+              <div class="w3-panel w3-pale-red w3-round-xlarge">
+                {{ error }}
+              </div>
+            {% endfor %}
+
+            <b>{{ field.label_tag }}</b>
+            {{ field }}
+            {% if field.help_text %}
+              <span class="w3-small">
+                {{ field.help_text }}
+              </span>
+            {% endif %}
+          </div>
+        {% endfor %}
+
+      <input type="submit" value="{% if creation %}Create Task{% else %}Save Changes{% endif %}" class="w3-button w3-green w3-margin w3-wide w3-right">
+
+    </form>
+    {% if not creation %}
+      <a href="{% url 'app:task_delete' task.id %}"><button class="w3-button w3-red w3-margin w3-left">Delete Task</button></a>
+    {% endif %}
+  </div>
+{% endblock %}

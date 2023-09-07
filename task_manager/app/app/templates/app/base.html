@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head lang="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'app/w3.css' %}">
+    <title>{% block title %}{% endblock %}</title>
+  </head>
+  <body>
+
+  <div class="w3-bar w3-green">
+
+    {% if user.is_authenticated %}
+      <strong class="w3-bar-item"><i>{{ user.username }}</i></strong>
+      <a href="{% url 'app:task_my_tasks' %}" class="w3-bar-item w3-button">My Tasks</a>
+      <a href="{% url 'app:task_completed_tasks' %}" class="w3-bar-item w3-button">Completed Tasks</a>
+      <a href="{% url 'app:task_create' %}" class="w3-bar-item w3-button">Create a Task</a>
+      <a href="{% url 'app:logout' %}" class="w3-bar-item w3-button">Logout</a>
+    {% else %}
+      <a href="{% url 'app:signup' %}" class="w3-bar-item w3-button">Sign Up</a>
+      <a href="{% url 'app:login' %}" class="w3-bar-item w3-button">Log In</a>
+    {% endif %}
+  </div>
+
+
+
+  <div class="w3-container">
+    {% if messages %}
+      {% for message in messages %}
+        <div class="w3-panel w3-round-xlarge {% if message.tags == 'success' %}w3-pale-green{% else %}w3-pale-red{% endif %}" style="padding:10px">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+    {% block content %}{% endblock %}
+  </div>
+
+  </body>
+</html>

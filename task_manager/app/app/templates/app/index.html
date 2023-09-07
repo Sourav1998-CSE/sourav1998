@@ -1,0 +1,11 @@
+{% extends "./base.html" %}
+
+{% block title %}Welcome to Task Manager{% endblock %}
+
+{% block content %}
+  {% if user.is_authenticated %}
+    <h2 class="w3-card w3-padding-16 w3-light-grey">Welcome to the Task Manager</h2><br />
+  {% else %}
+    <h2>You are not loggedIn, please Login or signUp</h2>
+  {% endif %}
+{% endblock %}
